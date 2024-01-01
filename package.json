@@ -1,0 +1,22 @@
+{
+  "name": "emotivoice-text-to-speech",
+  "version": "1.0.0",
+  "description": "A Node.js application to convert text to speech using the Emotivoice API.",
+  "main": "gen.js",
+  "scripts": {
+    "start": "node gen.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/siraben/emotivoice-cli.git"
+  },
+  "author": "Ben Siraphob",
+  "license": "MIT",
+  "dependencies": {
+    "axios": "^1.6.2",
+    "commander": "^11.1.0",
+    "moment": "^2.29.1",
+    "replicate": "^0.25.1",
+    "sanitize-filename": "^1.6.3"
+  }
+}
