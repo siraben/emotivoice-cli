@@ -1,5 +1,7 @@
 # Emotivoice CLI
 
+<p align="center"><img src="./logo.png" width=350></p>
+
 ## Description
 This is a CLI tool that uses the [Emotivoice
 API](https://github.com/netease-youdao/EmotiVoice) to convert text to
