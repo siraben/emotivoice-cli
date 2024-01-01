@@ -7,6 +7,21 @@ speech with ability for emotional synthesis. It supports multiple
 languages, with a default setting for Chinese, and allows users to
 customize the emotional tone of the speech using Chinese prompts.
 
+## Features
+- Supports multiple languages, defaulting to Chinese.
+- Customizable emotional tone using Chinese prompts.
+- Processes text input directly or from a file.
+- Outputs in MP3 format with customizable voice and language options.
+
+### Example
+To convert a Chinese sentence into speech with a happy tone, run
+
+```sh
+node gen.js "春节是中国最重要的佳节之一。" --language Chinese --emotion 高兴
+```
+
+The output is given in the `output` folder, with the timestamped and
+prefixed mp3 output.
 
 ## Installation
 1. **Clone the Repository**
@@ -26,12 +41,12 @@ To use the tool, execute the following command:
 
 - **Direct Text Input:**
 ```ShellSession
-$ node gen.js "Your text here" [--output <output_folder>] [--voice <voice_id>] [--language <language>] [--emotion <chinese_emotion>]
+node gen.js "Your text here" [--output <output_folder>] [--voice <voice_id>] [--language <language>] [--emotion <chinese_emotion>]
   ```
 
 - **File Input:**
 ```ShellSession
-$  node gen.js -f <path_to_file> [--output <output_folder>] [--voice <voice_id>] [--language <language>] [--emotion <chinese_emotion>]
+node gen.js -f <path_to_file> [--output <output_folder>] [--voice <voice_id>] [--language <language>] [--emotion <chinese_emotion>]
   ```
 
 Options:
@@ -43,19 +58,6 @@ Options:
 - '愤怒' (Fènnù) - Angry
 - '兴奋' (Xīngfèn) - Excited
 - '平静' (Píngjìng) - Calm
-
-### Example Invocation
-For instance, to convert a Chinese sentence into speech with a happy tone, you would use:
-```sh
-node gen.js "春节是中国最重要的佳节之一。" --language Chinese --emotion 高兴
-```
-This command will process the sentence in Chinese with a happy tone and generate an MP3 file with the spoken content.
-
-## Features
-- Supports multiple languages, defaulting to Chinese.
-- Customizable emotional tone using Chinese prompts.
-- Processes text input directly or from a file.
-- Outputs in MP3 format with customizable voice and language options.
 
 ## Configuration
 Set `REPLICATE_API_TOKEN` in your environment variables for authentication with the Emotivoice API.
