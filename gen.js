@@ -53,12 +53,12 @@ async function runModel(prompt, outputFolder, voice, language, emotion) {
     );
 
     if (typeof output === "string" && output.startsWith("https://")) {
+      const timestamp = moment().format("YYYY-MM-DDTHH_mm_ss_SSS");
       const response = await axios({
         url: output,
         responseType: "arraybuffer",
       });
       const data = response.data;
-      const timestamp = moment().format("YYYY-MM-DDTHH_mm_ss_SSS");
       const safePrompt = getSafeFilename(prompt);
       const filename = `${timestamp}_${safePrompt}.mp3`;
       const outputPath = path.join(outputFolder, filename);
