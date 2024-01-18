@@ -37,9 +37,23 @@ function getSafeFilename(prompt) {
   return sanitize(prompt).slice(0, 30);
 }
 
-async function runModel(prompt, outputFolder, voice, language, emotion) {
+function padIndex(index, length) {
+  return String(index).padStart(length, '0');
+}
+
+async function runModel(prompt, outputFolder, voice, language, emotion, paddedIndex) {
   try {
     console.log("Prompt: ", prompt);
+    // Check if the voices is in voices.json, which has a list of voices in the voices key
+    // If the voice is not in the list, then exit
+    if (fs.existsSync("voices.json")) {
+      const voices = JSON.parse(fs.readFileSync("voices.json", "utf8"));
+      if (!voices.voices.includes(voice)) {
+        console.log(`Voice ID ${voice} not found in voices.json`);
+        process.exit(1);
+      }
+    }
+    
     const output = await replicate.run(
       "bramhooimeijer/emotivoice:261b541053a0a30d922fd61bb47fbbc669941cb84f96a8f0042f14e8ad34f494",
       {
@@ -53,14 +67,14 @@ async function runModel(prompt, outputFolder, voice, language, emotion) {
     );
 
     if (typeof output === "string" && output.startsWith("https://")) {
-      const timestamp = moment().format("YYYY-MM-DDTHH_mm_ss_SSS");
+      const currentDate = moment().format("YYYY-MM-DD");
       const response = await axios({
         url: output,
         responseType: "arraybuffer",
       });
       const data = response.data;
       const safePrompt = getSafeFilename(prompt);
-      const filename = `${timestamp}_${safePrompt}.mp3`;
+      const filename = `${currentDate}_${paddedIndex}_${voice}_${safePrompt}.mp3`;
       const outputPath = path.join(outputFolder, filename);
       fs.writeFileSync(outputPath, data);
       console.log(`Output saved to ${outputPath}`);
@@ -72,11 +86,14 @@ async function runModel(prompt, outputFolder, voice, language, emotion) {
   }
 }
 
-function processFile(filePath, outputFolder, voice, language, emotion) {
+async function processFile(filePath, outputFolder, voice, language, emotion) {
   const lines = fs.readFileSync(filePath, { encoding: "utf8" }).split("\n");
-  lines.forEach((line) => {
+  const padLength = String(lines.length).length;
+
+  lines.forEach((line, index) => {
     if (line.trim()) {
-      runModel(line.trim(), outputFolder, voice, language, emotion);
+      const paddedIndex = padIndex(index, padLength);
+      runModel(line.trim(), outputFolder, voice, language, emotion, paddedIndex);
     }
   });
 }
@@ -100,7 +117,7 @@ if (input) {
   }
 } else if (program.args.length > 0) {
   const prompt = program.args.join(" ");
-  runModel(prompt, outputFolder, voice, language, emotion);
+  runModel(prompt, outputFolder, voice, language, emotion, 0);
 } else {
   console.error("No input provided.");
   process.exit(1);
