@@ -6,11 +6,12 @@
 This is a CLI tool that uses the [Emotivoice
 API](https://github.com/netease-youdao/EmotiVoice) to convert text to
 speech with ability for emotional synthesis. It supports multiple
-languages, with a default setting for Chinese, and allows users to
-customize the emotional tone of the speech using Chinese prompts.
+languages, with a default setting for Mandarin Chinese, and allows
+users to customize the emotional tone of the speech using Chinese
+prompts.
 
 ## Features
-- Supports multiple languages, defaulting to Chinese.
+- Supports multiple languages, defaulting to Mandarin Chinese.
 - Customizable emotional tone using Chinese prompts.
 - Processes text input directly or from a file.
 - Outputs in MP3 format with customizable voice and language options.
